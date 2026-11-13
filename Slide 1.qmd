@@ -1,0 +1,532 @@
+---
+title: "Minicurso Introdução ao R e Python"
+subtitle: ""
+author: "Aula 1 - Introdução ao R"
+institute: ""
+
+format:
+  beamer:
+    theme: Madrid
+    colortheme: default
+    fonttheme: default
+    aspectratio: 169
+    pdf-engine: xelatex
+    slide-level: 2
+    include-in-header:
+      text: |
+        \setbeamertemplate{navigation symbols}[default]
+        \renewcommand{\sectionname}{}
+---
+
+## Objetivo 
+
+- Compreender e desenvolver habilidades no uso dos softwares R e Python, explorando suas aplicações no meio acadêmico e no mercado de trabalho.
+
+- Aprender técnicas de manipulação, organização e tratamento de bases de dados, incluindo importação, limpeza, transformação e criação de variáveis.
+
+- Conhecer e utilizar as principais ferramentas, bibliotecas e pacotes do R e Python voltados à análise de dados e à ciência de dados.
+
+- Desenvolver conhecimentos em estatística descritiva e inferencial, aplicando testes estatísticos e modelos básicos, bem como interpretando seus resultados.
+
+- Aprender a identificar, acessar e baixar bases de dados de diferentes fontes, especialmente repositórios públicos e plataformas governamentais.
+
+- Aplicar os conhecimentos adquiridos em exercícios práticos, envolvendo problemas de pesquisa acadêmica e situações do mercado de trabalho.
+
+
+
+## Repositório 
+
+https://github.com/sergiodaneris
+
+
+## Operações Básicas
+
+
+```{r}
+#| echo: true
+5 + 3          # soma
+5 - 3          # subtração
+5 * 3          # multiplicação
+5 / 3          # divisão
+5 ^ 3          # potência (também 5 ** 3)
+```
+
+## Operações Básicas
+
+```{r}
+#| echo: true
+2 + 3 * 4      # 14
+(2 + 3) * 4    # 20
+-2 ^ 2         # -4 (a potência vem antes do sinal)
+(-2) ^ 2       # 4
+```
+
+## Operações Básicas
+
+```{r}
+#| echo: true
+sqrt(144)      # raiz quadrada
+abs(-7)        # valor absoluto
+exp(1)         # número de Euler
+log(100)       # logaritmo natural
+log10(1000)    # logaritmo base 10
+log2(8)        # logaritmo base 2
+log(8, base = 2)
+factorial(5)   # 120
+```
+## Operações Básicas 
+
+```{r}
+#| echo: true
+round(3.14159, 2)   # 3.14
+ceiling(3.2)        # 4
+floor(3.8)          # 3
+trunc(-3.8)         # -3
+signif(123456, 2)   # 120000
+```
+
+## Criando Objetos 
+
+Guardar valores em objetos
+
+```{r}
+#| echo: true
+inflacao <- 4.5
+selic <- 10.75
+juro_real <- selic - inflacao
+juro_real
+```
+
+Conferir o que existe na memória 
+
+```{r}
+#| echo: true
+ls()
+```
+
+## Criando Objetos 
+
+Tipos de Objetos 
+
+```{r}
+#| echo: true
+inflacao <- 4.5                       # numérico (double)
+ano <- 2026L                          # inteiro (sufixo L)
+pais <- "Brasil"                      # texto (character)
+recessao <- FALSE                     # lógico
+hoje <- as.Date("2026-11-13")         # data
+regiao <- factor("Sul")               # fator
+```
+
+
+## Criando Objetos 
+
+Verificar as classes 
+
+```{r}
+#| echo: true
+class(inflacao)    # "numeric"
+class(ano)         # "integer"
+class(pais)        # "character"
+class(recessao)    # "logical"
+class(hoje)        # "Date"
+class(regiao)      # "factor"
+```
+
+## Criando Objetos 
+
+Criando Vetores 
+
+```{r}
+#| echo: true
+pais <- c("Brasil", "Argentina", "Chile", "Colômbia", "Peru", "Uruguai")
+pib <- c(2.9, -1.6, 2.5, 1.7, 3.0, 3.1)               # crescimento do PIB (%)
+inflacao <- c(4.5, 211.4, 3.9, 9.3, 3.2, 5.1)         # inflação anual (%)
+desemprego <- c(6.8, 5.7, 8.5, 10.2, 5.1, 7.9)        # taxa de desemprego (%)
+populacao <- c(212, 46, 19, 52, 34, 3.5)              # milhões de habitantes
+bloco <- c("Mercosul", "Mercosul", "Mercosul",
+           "Mercosul", "Mercosul", "Mercosul")
+```
+
+
+## Dataframe 
+
+Unindo as informações em um dataframe
+
+```{r}
+#| echo: true
+paises <- data.frame(pais, pib, inflacao, desemprego, populacao, bloco)
+paises
+```
+
+## Dataframe 
+
+Verificando a estrutura 
+
+```{r}
+#| echo: true
+str(paises)
+```
+
+## Dataframe 
+
+Funções úteis 
+
+```{r}
+#| echo: true
+length(pib)
+sum(pib) 
+mean(pib) 
+max(pib) 
+min(pib)
+which.max(pib)                 # posição do maior
+pais[which.max(pib)]           # país de maior crescimento
+```
+## Dataframe 
+
+Acessando colunas e linhas 
+
+```{r}
+#| echo: true
+paises$pib                    # uma coluna
+paises[["inflacao"]]
+```
+```{r}
+#| echo: true
+paises[3, ]                   # uma linha
+```
+
+## Dataframe 
+
+```{r}
+#| echo: true
+paises[3, "pib"]              # linha 3, coluna pib
+```
+
+```{r}
+#| echo: true
+paises[, c("pais", "pib")]    # duas colunas
+```
+
+
+## Dataframe 
+
+```{r}
+#| echo: true
+paises[paises$pib > 2.5, ]    # filtro por condição
+```
+
+
+## Dataframe 
+
+```{r}
+#| echo: true
+paises$pop_mil <- paises$populacao * 1000
+paises$juro_real_aprox <- 10.75 - paises$inflacao   # selic menos inflação
+```
+
+
+## Dataframe 
+
+```{r}
+#| echo: true
+head(paises)
+```
+
+## Dataframe 
+
+Criando uma base de dados com valores aleatórios 
+
+```{r}
+#| echo: true
+
+set.seed(2026)
+
+n <- 200
+
+id <- 1:n
+idade <- sample(18:65, n, replace = TRUE)
+sexo <- sample(c("F", "M"), n, replace = TRUE)
+regiao <- sample(c("Norte", "Nordeste", "Centro-Oeste", "Sudeste", "Sul"), n, replace = TRUE)
+escolaridade <- sample(c("Fundamental", "Médio", "Superior"), n, replace = TRUE)
+anos_estudo <- sample(5:20, n, replace = TRUE)
+filhos <- sample(0:5, n, replace = TRUE)
+empregado <- sample(c(TRUE, FALSE), n, replace = TRUE)
+renda <- round(runif(n, 1500, 10000), 2)
+```
+
+
+## Dataframe 
+
+
+
+```{r}
+#| echo: true
+base <- data.frame(id,idade,sexo,regiao,escolaridade,
+anos_estudo,filhos,empregado,renda)
+```
+
+Definindo variáveis categóricas como fatores
+
+```{r}
+#| echo: true
+base$sexo <- factor(base$sexo)
+base$regiao <- factor(base$regiao)
+base$escolaridade <- factor(
+  base$escolaridade,
+  levels = c("Fundamental", "Médio", "Superior"),
+  ordered = TRUE
+)
+```
+
+
+
+## Dataframe 
+
+Visualizando
+
+```{r}
+#| echo: true
+head(base)
+```
+
+
+## Dataframe 
+
+```{r}
+#| echo: true
+base$sexo <- factor(base$sexo)
+base$regiao <- factor(base$regiao)
+base$escolaridade <- factor(base$escolaridade,levels = c("Fundamental", "Médio", "Superior"),ordered = TRUE)
+```
+
+
+## Dataframe 
+
+
+```{r}
+#| echo: true
+head(base)          # 6 primeiras linhas
+
+```
+
+## Dataframe 
+
+```{r}
+#| echo: true
+head(base, 10)      # 10 primeiras
+```
+
+## Dataframe 
+
+```{r}
+#| echo: true
+tail(base)          # 6 últimas
+```
+
+## Dataframe 
+
+```{r}
+#| echo: true
+dim(base)           # linhas e colunas: 200 x 9
+```
+
+
+## Dataframe 
+
+```{r}
+#| echo: true
+nrow(base)
+```
+
+
+## Dataframe 
+
+```{r}
+#| echo: true
+ncol(base)
+```
+
+
+## Estatisticas Descritivas
+
+```{r}
+#| echo: true
+summary(base)
+```
+
+## Gráficos 
+
+A partir das variáveis existentes 
+
+```{r, fig.width=7, fig.height=4, out.width="50%", fig.align="center"}
+#| echo: true
+# 1. Histograma da idade
+hist(base$idade,
+     main = "Distribuição da idade",
+     xlab = "Idade",
+     col = "lightblue")
+```
+
+## Gráficos 
+
+```{r, fig.width=7, fig.height=4, out.width="50%", fig.align="center"}
+#| echo: true
+# 2. Histograma da renda
+hist(base$renda,
+     main = "Distribuição da renda",
+     xlab = "Renda (R$)",
+     col = "lightgreen")
+```
+
+
+## Gráficos 
+
+```{r, fig.width=7, fig.height=4, out.width="50%", fig.align="center"}
+#| echo: true
+# 3. Boxplot da renda por escolaridade
+boxplot(renda ~ escolaridade, data = base,
+        main = "Renda por escolaridade",
+        xlab = "Escolaridade",
+        ylab = "Renda (R$)",
+        col = "lightblue")
+```
+
+
+## Gráficos 
+
+```{r, fig.width=7, fig.height=4, out.width="50%", fig.align="center"}
+#| echo: true
+# 4. Frequência por sexo
+barplot(table(base$sexo),
+        main = "Frequência por sexo",
+        xlab = "Sexo",
+        ylab = "Frequência",
+        col = "lightpink")
+```
+
+
+
+## Gráficos 
+
+```{r, fig.width=7, fig.height=4, out.width="50%", fig.align="center"}
+#| echo: true
+# 5. Frequência por região
+barplot(table(base$regiao),
+        main = "Distribuição por região",
+        xlab = "Região",
+        ylab = "Frequência",
+        col = "lightgreen",
+        las = 2)
+```
+
+
+## Gráficos 
+
+```{r, fig.width=7, fig.height=4, out.width="50%", fig.align="center"}
+#| echo: true
+# 6. Frequência por escolaridade
+barplot(table(base$escolaridade),
+        main = "Distribuição da escolaridade",
+        xlab = "Escolaridade",
+        ylab = "Frequência",
+        col = "lightyellow")
+```
+
+## Gráficos 
+
+```{r, fig.width=7, fig.height=4, out.width="50%", fig.align="center"}
+#| echo: true
+# 7. Idade e renda
+plot(base$idade, base$renda,
+     main = "Relação entre idade e renda",
+     xlab = "Idade",
+     ylab = "Renda (R$)",
+     col = "blue",
+     pch = 19)
+
+```
+
+## Gráficos 
+
+```{r, fig.width=7, fig.height=4, out.width="50%", fig.align="center"}
+#| echo: true
+# 8. Número de filhos
+barplot(table(base$filhos),
+        main = "Distribuição do número de filhos",
+        xlab = "Número de filhos",
+        ylab = "Frequência",
+        col = "lightblue")
+```
+
+## Gráficos 
+
+```{r, fig.width=7, fig.height=4, out.width="50%", fig.align="center"}
+#| echo: true
+# 9. Escolaridade e anos de estudo
+boxplot(anos_estudo ~ escolaridade, data = base,
+        main = "Anos de estudo por escolaridade",
+        xlab = "Escolaridade",
+        ylab = "Anos de estudo",
+        col = "lightgreen")
+
+```
+
+
+## Gráficos 
+
+```{r, fig.width=7, fig.height=4, out.width="50%", fig.align="center"}
+#| echo: true
+# 10. Situação de emprego
+barplot(table(base$empregado),
+        main = "Distribuição da situação de emprego",
+        xlab = "Empregado",
+        ylab = "Frequência",
+        col = "lightcoral")
+
+```
+
+## Gráficos 
+
+Sazonalidade (Para isso iremos criar um sample de data) e calcular a renda média por mês
+
+```{r}
+#| echo: true
+set.seed(2026)
+
+base$mes <- sample(1:12, nrow(base), replace = TRUE)
+
+base$mes_nome <- factor(base$mes,levels = 1:12,labels = c("Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
+"Jul", "Ago", "Set", "Out", "Nov", "Dez"))
+```
+
+
+```{r}
+#| echo: true
+renda_mensal <- aggregate(renda ~ mes_nome,data = base,FUN = mean)
+```
+
+
+## Gráficos 
+
+Sazonalidade 
+
+
+```{r, fig.width=7, fig.height=4, out.width="50%", fig.align="center"}
+#| echo: true
+plot(renda_mensal$renda,type = "o",xaxt = "n",main = "Sazonalidade da renda mensal",xlab = "Mês",
+ylab = "Renda média (R$)",col = "blue",pch = 19)
+axis(1, at = 1:12, labels = renda_mensal$mes_nome)
+```
+
+
+## Aplicação prática
+
+- Reproduzir no R Script os exemplos desenvolvidos no RMarkdown.
+
+- Criar e manipular variáveis e listas.
+
+- Construir um dataframe e realizar verificações de sua estrutura e consistência.
+
+- Elaborar gráficos utilizando as variáveis disponíveis na base de dados.
+
