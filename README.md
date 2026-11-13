@@ -13,4 +13,4 @@ Aqui você encontrará:
 Sinta-se à vontade para explorar o conteúdo e utilizá-lo como apoio nos estudos.
 Em caso de dúvidas, entre em contato comigo pelo e-mail: sergiodanerisalves@gmail.com
 
-Abraço e bons estudos!
+Bons estudos!
