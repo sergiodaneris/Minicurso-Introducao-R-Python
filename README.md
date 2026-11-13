@@ -1,4 +1,4 @@
-# Semana-Academica-de-Ciências-Econômicas
+
 
 ### Este repositório foi criado com o objetivo de armazenar e organizar o material utilizado para a replicação dos exemplos apresentados em sala de aula.
 
